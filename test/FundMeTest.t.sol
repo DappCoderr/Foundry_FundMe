@@ -4,25 +4,24 @@ pragma solidity ^0.8.18;
 import {Test,console} from "forge-std/Test.sol";
 
 import {FundMe} from "../src/FundMe.sol";
+import {DeployFunMe} from "../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test{
 
     FundMe fundeMe;
 
     function setup() external {
-        fundeMe = new FundMe();
+        // fundeMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        DeployFunMe deployFundMe = new DeployFunMe();
+        fundeMe = deployFundMe.run();
     }
 
-    // function testDemo() public {}
 
-    // function testMinDollarIsFive() public {
-    //     assertEq(fundeMe.MINIMUM_USD(), 10e18);
-    // }
+    function testMinDollarIsFive() public {
+        assertEq(fundeMe.MINIMUM_USD(), 5e18);
+    }
 
     function testOwnerIsMsgSender() public {
-        console.log(msg.sender);
-        console.log(fundeMe.i_owner());
-        console.log(address(this));
-        assertEq(fundeMe.i_owner(), address(this));
+        assertEq(fundeMe.i_owner(), msg.sender);
     }
 }
