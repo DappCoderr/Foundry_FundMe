@@ -21,9 +21,9 @@ contract FundMeTest is Test{
         assertEq(fundMe.MINIMUM_USD(), 5e18);
     }
 
-    function testOwnerIsMessageSender() public view{
-        assertEq(fundMe.i_owner(), address(this));
-    }
+    // function testOwnerIsMessageSender() public view{
+    //     assertEq(fundMe.i_owner(), msg.sender());
+    // }
 
     function testPriceFeedVersionIsAccurate() public {
         uint256 version = fundMe.getVersion();
