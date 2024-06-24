@@ -9,7 +9,7 @@ error FundMe___NotOwner();
 contract FundMe {
     using PriceConverter for uint256;
 
-    mapping(address => uint256) public s_addressToAmountFunded;
+    mapping(address => uint256) private s_addressToAmountFunded;
     address[] public s_funders;
 
     address public /* immutable */ i_owner;
@@ -73,6 +73,21 @@ contract FundMe {
     receive() external payable {
         fund();
     }
+
+
+/**
+ * View and Pure functions (Getters)
+ */
+
+function getAddressToAmountFunded( address fundingAddress) external view returns(uint256){
+    return s_addressToAmountFunded[fundingAddress];
+}
+
+function getFunders(uint256 index) external view returns(address){
+    return s_funders[index];
+}
+
+
 }
 
 // Concepts we didn't cover yet (will cover in later sections)
