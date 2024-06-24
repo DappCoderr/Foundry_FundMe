@@ -4,10 +4,18 @@
 
 Foundry consists of:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+
+- To compile smart contract run: `forge build`
+- To deploy contract with deployment script run: `forge script script/deployFundMe.s.sol`
+- To run test file: `forge test`
+- To run a test file with a two console.log: `forge test --vv`
+- To run a single test run: `forge test -m (function name)`
+- To run a single test run: `forge test -m (function name) -vvv` (You will get a stack tree of the error you are facing)
+- Test coverage, run: `forge coverage --rpc-url` or we can write `forge coverage --fork-url`
 
 ## Documentation
 

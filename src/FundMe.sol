@@ -12,7 +12,6 @@ contract FundMe {
     mapping(address => uint256) public addressToAmountFunded;
     address[] public funders;
 
-    // Could we make this constant?  /* hint: no! We should make it immutable! */
     address public /* immutable */ i_owner;
     uint256 public constant MINIMUM_USD = 5 * 10 ** 18;
 
@@ -22,7 +21,6 @@ contract FundMe {
 
     function fund() public payable {
         require(msg.value.getConversionRate() >= MINIMUM_USD, "You need to spend more ETH!");
-        // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
         addressToAmountFunded[msg.sender] += msg.value;
         funders.push(msg.sender);
     }
@@ -33,7 +31,6 @@ contract FundMe {
     }
 
     modifier onlyOwner() {
-        // require(msg.sender == owner);
         if (msg.sender != i_owner) revert FundMe___NotOwner();
         _;
     }
