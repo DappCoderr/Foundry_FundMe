@@ -25,9 +25,9 @@ contract FundMeTest is Test{
         assertEq(fundMe.MINIMUM_USD(), 5e18);
     }
 
-    // function testOwnerIsMessageSender() public view{
-    //     assertEq(fundMe.i_owner(), msg.sender());
-    // }
+    function testOwnerIsMessageSender() public view{
+        assertEq(fundMe.getOwner(), msg.sender);
+    }
 
     function testPriceFeedVersionIsAccurate() public {
         uint256 version = fundMe.getVersion();
@@ -78,5 +78,24 @@ contract FundMeTest is Test{
 
         assertEq(endingFundMeBalance, 0);
         assertEq(startingOwnerBalance + startingFundMeBalance, endingOwnerBalance);
+    }
+
+    function testWithdrawFromMultipleFunders() public funded {
+        uint160 numberOfFunders = 10;
+        uint160 startingFunderIndex = 2;
+        for(uint160 i = startingFunderIndex; i< numberOfFunders ; i++){
+            hoax(address(i), SEND_VALUE);
+            fundMe.fund{value:SEND_VALUE}();
+        }
+
+        uint256 startingOwnerBalance = fundMe.getOwner().balance;
+        uint256 startingFundMeBalance = address(fundMe).balance;
+
+        vm.startPrank(fundMe.getOwner());
+        fundMe.withdraw();
+        vm.stopPrank();
+
+        assert(address(fundMe).balance == 0);
+        assert(startingOwnerBalance + startingFundMeBalance == fundMe.getOwner().balance);
     }
 }
